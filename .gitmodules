@@ -1,0 +1,6 @@
+[submodule "luaort"]
+	path = luaort
+	url = https://github.com/MrSyabro/luaort.git
+[submodule "luapng"]
+	path = luapng
+	url = https://github.com/MrSyabro/luapng.git

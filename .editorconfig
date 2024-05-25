@@ -1,0 +1,21 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[*.lua]
+indent_style = tab
+indent_size = 2
+quote_style = double
+space_around_table_field_list = true
+align_continuous_assign_statement = true
+align_continuous_rect_table_field = false
+align_array_table = true
