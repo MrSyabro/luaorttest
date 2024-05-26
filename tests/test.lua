@@ -11,16 +11,35 @@ local Env = Ort.CreateEnv()
 local SessionOptions = Ort.CreateSessionOptions()
 
 local Session = Env:CreateSession("candy.onnx", SessionOptions)
-print("Session InputCount", Session:GetInputCount())
-print("Session OutputCount", Session:GetOutputCount())
 
-local inputvalue = Ort.CreateValue({1,3,720,720}, "FLOAT", d)
-print("in is tensor:", inputvalue:isTensor())
+local inputs = Session:GetInputs()
+print("Inputs:")
+for i, name in ipairs(inputs) do
+	local datatype, dims = Session:GetOutputType(1)
+	io.write(("%d %s(%s): {"):format(i, name, datatype))
+	for i, dim in ipairs(dims) do
+		io.write(tostring(dim))
+		if i ~= #dims then io.write(", ") end
+	end
+	io.write("}\n")
+end
 
-local outputvalue = Session:Run({"inputImage"}, inputvalue, {"outputImage"})
-print("out isTensor:", outputvalue:isTensor())
+local outputs = Session:GetOutputs()
+print("Outputs:")
+for i, name in ipairs(outputs) do
+	local datatype, dims = Session:GetOutputType(1)
+	io.write(("%d %s(%s): {"):format(i, name, datatype))
+	for i, dim in ipairs(dims) do
+		io.write(tostring(dim))
+		if i ~= #dims then io.write(", ") end
+	end
+	io.write("}\n")
+end
 
-local d = outputvalue:GetData()
+local inputvalue = Ort.CreateValue({ 1, 3, w, h }, "FLOAT", d)
+local outputvalues = Session:Run(inputs, {inputvalue}, outputs)
+
+local d = outputvalues[1]:GetData()
 print("size of outdata", #d)
 
 d = png.chw2hwc(d)
@@ -28,4 +47,4 @@ print("data2 size", #d)
 
 png.write(d, w, h, "out.png")
 
-os.execute('start out.png')
+os.execute("start out.png")
