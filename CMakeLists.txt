@@ -23,9 +23,15 @@ add_dependencies(luaexe luapng luaort)
 
 file(INSTALL 
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.lua
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests/candy.onnx
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests/in.png
         DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+file(INSTALL
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/models/
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/models)
+
+file(INSTALL 
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/images/
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/images)
 
 file(INSTALL ${ORT_DIR}/onnxruntime.dll DESTINATION ${CMAKE_INSTALL_PREFIX})
 file(INSTALL ${ORT_DIR}/onnxruntime_providers_shared.dll DESTINATION ${CMAKE_INSTALL_PREFIX})
