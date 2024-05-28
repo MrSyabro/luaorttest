@@ -17,9 +17,11 @@ local outputs = Session:GetOutputs()
 local inputvalue = Ort.CreateValue({ 1, 3, dw, dh }, "FLOAT", d)
 
 print("Running")
-local outputvalues = Session:Run(inputs, {inputvalue}, outputs)
+local outputvalues = Session:Run {
+	inputImage = inputvalue
+}
 
-local d = outputvalues[1]:GetData()
+local d = outputvalues.outputImage:GetData()
 d = png.chw2hwc(d)
 png.write(d, dw, dh, "out.png")
 os.execute("start out.png")
