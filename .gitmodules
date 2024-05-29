@@ -4,3 +4,6 @@
 [submodule "luapng"]
 	path = luapng
 	url = https://github.com/MrSyabro/luapng.git
+[submodule "cutils"]
+	path = cutils
+	url = https://github.com/MrSyabro/cutils.git
