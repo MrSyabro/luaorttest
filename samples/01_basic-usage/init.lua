@@ -1,4 +1,5 @@
 local Ort = require "luaort"
+local vec = require "vec"
 
 -- create a new session and load the specific model.
 --
@@ -9,10 +10,8 @@ local Env = Ort.CreateEnv()
 local SessionOptions = Ort.CreateSessionOptions()
 local Session = Env:CreateSession("model.onnx", SessionOptions)
 
-local dataA = ('f'):rep(12):pack(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12) --pack 12 floats to bytestring
-local tensorA = Ort.CreateValue({ 3, 4 }, "FLOAT", dataA)
-local dataB = ('f'):rep(12):pack(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120)
-local tensorB = Ort.CreateValue({ 4, 3 }, "FLOAT", dataB)
+local tensorA = Ort.CreateValue({ 3, 4 }, "FLOAT", {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+local tensorB = Ort.CreateValue({ 4, 3 }, "FLOAT", {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120})
 
 local result = Session:Run {
 	a = tensorA,

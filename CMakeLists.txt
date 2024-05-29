@@ -12,6 +12,7 @@ target_link_libraries(luaexe PUBLIC lua)
 
 add_subdirectory(luaort)
 add_subdirectory(luapng)
+add_subdirectory(cutils)
 
 # Настройте установочные команды для библиотек
 install(TARGETS luaexe
@@ -19,7 +20,7 @@ install(TARGETS luaexe
         LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX})
 
-add_dependencies(luaexe luapng luaort)
+add_dependencies(luaexe luapng luaort vec)
 
 file(INSTALL 
         ${CMAKE_CURRENT_SOURCE_DIR}/samples
