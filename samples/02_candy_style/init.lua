@@ -1,18 +1,21 @@
 local Ort = require "luaort"
 local png = require "luapng"
-local vec = require "vec"
 
+print "Loading model"
 local Env = Ort.CreateEnv()
 local SessionOptions = Ort.CreateSessionOptions()
 local Session = Env:CreateSession("candy.onnx", SessionOptions)
 
-local imagedata, dh, dw = png.read("in.png")
-imagedata = vec.fromfloatb(imagedata)
-local imagetensor = Ort.CreateValue({ 1, 3, dh, dw }, "FLOAT",  imagedata)
+local imagedata = png.read("in.png")
+local imagetensor = Ort.CreateValue({ 1, 3, imagedata.height, imagedata.width }, "FLOAT",  imagedata)
 
+print "Run"
 local outputvalues = Session:Run {
 	inputImage = imagetensor
 }
 
+print "saving"
 local outputImage = outputvalues.outputImage:GetData()
-png.write(outputImage, dh, dw, "out.png")
+outputImage.height = imagedata.height
+outputImage.width = imagedata.width
+png.write(outputImage, "out.png")
